@@ -6,12 +6,16 @@
 3. [Setup](#setup)
 4. [Usage](#usage)
 5. [Limitations](#limitations)
+6. [sudo_check.rb_](#sudo_check)
 
 ##Overview<a id="overview"></a>
-This is the sudo_helpers module. It was originally designed for a proof of 
-concept to demonstrate how puppet could be run as a non-privileged user and 
-still be allowed access to privileged commands via sudo.  After the POC I was 
-challenged to flesh it out and use it for real, so here it is.
+This module was originally designed for a proof of concept to 
+demonstrate how puppet could be run as a non-privileged user and 
+still be allowed access to privileged commands via sudo.  The original use 
+case was for a non-systems admin team who wanted to run, control and administrate
+using puppet.  Wide-spread use of root by non-admins is bad.
+
+After the POC I was challenged to flesh it out and use it for real, so here it is.
 
 My working environment is AIX, so the providers are AIX specific but additional
 providers should be relatively easy to produce given time and resources.
@@ -117,9 +121,34 @@ Do not assume that just because you're doing something with sudo that your
 commands are safe.  You still need to validate that entries you put into the
 sudoers file do not expose your system to more risk than is necessary.
 
+##Sudo_check.rb<a id="sudo_check"></a>
 Currently the sudo_check.rb script provides command lines for 
 every possible action a type could have on the named object, not just the 
 actions described by the manifest.  sudo_check.rb is not aware of hiera.
+
+Sudo_check's job is to spit out command lines, not determine if they are
+reasonable, sane or even accurate.
+
+For sudo check to work it's magic, the providers must have an easy
+way to pull out the command lines being used.  This is done using
+a Global Hash, ```@@sudo_cmnds``` which contains all of the command lines
+used.  Some of these command lines are listed at the top of the provider while 
+others may be interspersed throughout the provider.
+
+Sudo_check examines every sudo type called by a manifest and looks for 
+lines starting with "@@sudo_check." It treats all such lines as entries 
+into the sudo_cmd hash.
+
+If sudo_check cannot determine what to replace a variable with it will use
+an "*" which may not be desired result!
+
+It also contains both a white list and a black list for commands.  Commands entered
+in the whitelist are assumed to be innocuous enough to not need parameters specified.
+By default "echo" is considered one of these commands.
+
+The black list will exclude any command line which matches an entry in the black
+list.  The list by default contains "sudo" as we don't want sudo to be executed 
+by root which would then allow any command to be run as root.
 
 License
 -------
