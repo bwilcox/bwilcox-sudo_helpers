@@ -6,7 +6,7 @@
 3. [Setup](#setup)
 4. [Usage](#usage)
 5. [Limitations](#limitations)
-6. [sudo_check.rb_](#sudo_check)
+6. [sudo_check.rb](#sudo_check)
 
 ##Overview<a id="overview"></a>
 This module was originally designed for a proof of concept to 
