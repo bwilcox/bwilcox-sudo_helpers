@@ -24,7 +24,7 @@ providers should be relatively easy to produce given time and resources.
 The goal of this module is to provide functional equivalents to the native
 puppet types. This module doesn't simply "su" to root but tries to define 
 specific command lines used to accomplish tasks.  The companion script included
-with this modules will parse a specified manifest and create a list of 
+with this module will parse a specified manifest and create a list of 
 command lines which can be used in a sudoers file.
 
 ***NOTE:***  This is not meant to be a replacement for common sense and good 
