@@ -29,13 +29,13 @@ means you can still allow puppet, as a non-privileged user, to do things
 which could conceivably damage your system!
 
 Some Types and parameters were implemented which do not
-exist natively in puppet.  I found scenario's in which the extra parameters
+exist natively in puppet.  I found scenarios in which the extra parameters
 were useful.  The types implemented do not have all of the
 same parameters as the native Puppet equivalents.  In some cases 
 this is because I don't have an immediate need for them, in other cases
 a conscious decision was made to leave them out.  Recursing directory structures
 is a good example of a parameter left out by design.  The goal of using sudo
-is to have move fine grained control over what puppet is allowed do.  If we allow
+is to have a more fine grained control over what puppet is allowed do.  If we allow
 it to recursively change entire directory trees we're not really providing
 any extra security.
 
