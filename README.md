@@ -1,4 +1,4 @@
-#bwicox-sudo_helpers
+#bwilcox-sudo_helpers
 
 ####Table of Contents
 1. [Overview](#overview)
