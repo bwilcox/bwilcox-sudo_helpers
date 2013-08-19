@@ -80,8 +80,16 @@ Valid parameters are:
 * source - A URL/URI describing where to download the source file.
 * provider - The provider for controlling this class. (Currently only AIX)
 
+***NOTE:  This provider has a "protected" array in the destroy method.  By
+default this array contains:  "/", "/usr", "/sbin", "/bin", "/var", "/etc", "/etc/security", "/etc/security/user", "/etc/security/passwd"
+
+Attempts to ensure that items in the protected array do not exist, ie. delete them, 
+will fail.
+
 ####sudo_package
 This type replicates package management using sudo.
+
+Valid parameters are:
 
 * name - The name short name of the package, ie. "httpd".
 * install_pkg - The full name of the install file.
@@ -94,6 +102,8 @@ This type replicates package management using sudo.
 ####sudo_service
 This type replicates service management using sudo.
 
+Valid parameters are:
+
 * name - The name of the init script or service.
 * path - Path to the init script.
 * start - Command to start the service.
@@ -103,6 +113,8 @@ This type replicates service management using sudo.
 
 ####sudo_user
 This type replicates user management using sudo.
+
+Valid parameters are:
 
 * name - The login of the user.
 * attributes - all the attributes that can be set in AIX that we don't have a specific manifest attribute for. This is an array of attribute=value pairs.
@@ -129,11 +141,15 @@ actions described by the manifest.  sudo_check.rb is not aware of hiera.
 Sudo_check's job is to spit out command lines, not determine if they are
 reasonable, sane or even accurate.
 
-For sudo check to work it's magic, the providers must have an easy
-way to pull out the command lines being used.  This is done using
-a Global Hash, ```@@sudo_cmnds``` which contains all of the command lines
+Sudo_check.rb is not programmed with command lines.  For sudo check
+to work it's magic, the providers must have an easy way to pull out
+the command lines being used.  This is done using a global hash, 
+```@@sudo_cmnds``` which contains all of the command lines
 used.  Some of these command lines are listed at the top of the provider while 
 others may be interspersed throughout the provider.
+
+Always include ```@@sudo_cmnds[:sudo]``` in the hash.  It should contain
+the full path to the sudo command.
 
 Sudo_check examines every sudo type called by a manifest and looks for 
 lines starting with "@@sudo_check." It treats all such lines as entries 
