@@ -80,7 +80,7 @@ Valid parameters are:
 * source - A URL/URI describing where to download the source file.
 * provider - The provider for controlling this class. (Currently only AIX)
 
-***NOTE:  This provider has a "protected" array in the destroy method.  By
+***NOTE:***  This provider has a "protected" array in the destroy method.  By
 default this array contains:  "/", "/usr", "/sbin", "/bin", "/var", "/etc", "/etc/security", "/etc/security/user", "/etc/security/passwd"
 
 Attempts to ensure that items in the protected array do not exist, ie. delete them, 
